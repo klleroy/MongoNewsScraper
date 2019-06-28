@@ -4,7 +4,8 @@
   "description": "news scraper using express, mongoose, cheerio, axios and handlebars",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/jobu206/MongoNewsScraper/issues"
   },
-  "homepage": "https://github.com/jobu206/MongoNewsScraper#readme"
+  "homepage": "https://github.com/jobu206/MongoNewsScraper#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "exphbs": "^1.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.2",
+    "path": "^0.12.7"
+  }
 }
