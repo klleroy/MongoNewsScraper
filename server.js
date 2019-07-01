@@ -28,7 +28,7 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
-// Routes
+// Links to external Routes
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
