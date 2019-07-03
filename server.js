@@ -2,6 +2,7 @@
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const express = require('express');
+const exphbs = require('express-handlebars');
 
 const app = express();
 
@@ -19,7 +20,18 @@ app.use(
 app.use(express.static('public'));
 
 // creating handlebars 
-const exphbs = require('express-handlebars');
+app.engine(
+    'handlebars',
+    exphbs({
+        defaultLayout: 'main'
+    })
+);
+
+app.set(
+    'view-engine',
+    'handlebars'
+);
+
 app.engine('handlebars',exphbs({defaultLayout: 'main'}));
 app.set('view-engine','handlebars');
 
