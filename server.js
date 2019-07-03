@@ -1,41 +1,28 @@
-const express = require("express");
-const exphbs = require("express-handlebars");
-const cheerio = require("cheerio");
-const axios = require("axios");
-const mongoose = require("mongoose");
-const path = require("path");
+// Dependencies
+const bodyParser = require('body-parser');
+const logger = require('morgan');
 
-//  If deployed, use the deployed databasel. Otherwise use the local mongoHeadlines DB
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-
-mongoose.connect(MONGODB_URI);
-
-// invoke express & port
+const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "/public")));
-
-// Handlebars
-app.engine(
-    "handlebars",
-    exphbs({
-        defaultLayout: "main"
+app.use(logger('dev'));
+app.use(
+    bodyParser.urlencoded({
+        extended:false
     })
 );
-app.set("view engine", "handlebars");
 
-// Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+// connect to public dir
+app.use(express.static('public'));
 
-app.listen(PORT, function () {
+// creating handlebars 
+const exphbs = require('express-handlebars');
+app.engine('handlebars',exphbs({defaultLayout: 'main'}));
+app.set('view-engine','handlebars');
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     console.log(
-        "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-        PORT,
-        PORT
-    );
+        `==> 🌎  Listening on port ` + PORT
+    )
 });
