@@ -6,7 +6,7 @@ const exphbs = require('express-handlebars');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3500;
 
 // initalize morgan
 app.use(logger('dev'));
