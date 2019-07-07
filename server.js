@@ -37,6 +37,6 @@ app.set('view-engine','handlebars');
 
 app.listen(PORT, () => {
     console.log(
-        `==> 🌎  Listening on port ` + PORT
+        `==> 🌎  Access your app at http://localhost:` + PORT
     )
 });
