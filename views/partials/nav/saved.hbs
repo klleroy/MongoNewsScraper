@@ -1,0 +1,58 @@
+{{> nav/navbar}}
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{this.title}}</h1>
+            <h3>{{this.subtitle}}</h3>
+        </div>
+    </div>
+</div>
+
+<div id="articles">
+    {{#if articles}}
+    {{#each articles}}
+    <div class="well">
+        <div class="row">
+            <div class="col col-md-8">
+                <h5 class="card-header"><a href="{{this.link}}">{{this.title}}</a></h5>
+            </div>
+            <div class="col col-md-2">
+                <form class="form-inline" action="/api/articles/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn btn-danger">DELETE FROM SAVED</button>
+                </form>
+            </div>
+            <div class="col col-md-2">
+                <button type ="button" id="btn" href="#" class="btn btn-success" data-toggle="modal" data-target="#node{{this.id}}">ARTICLE NOTES</button>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{this.excerpt}}</p>
+        </div>
+
+    {{> content/modal}}
+    </div>
+{{> content/modal}}
+</div>
+  
+       
+    
+
+
+      {{/each}}
+
+    {{else}}
+    <div class="card">
+        <div class="card-body">
+            Uh Oh. Looks like we don't have any saved articles.
+        </div>
+    </div>
+    <div class="card text-center">
+        <div class="card-header">
+            Would You Like to Browse Available Articles?
+        </div>
+        <div class="card-body">
+            <p class="card-text text-center"><a href="/api/articles/scrape">Browse Articles</a></p>
+        </div>
+    </div>
+    {{/if}}
+</div>
