@@ -1,13 +1,40 @@
-<div class="container article-container">
-  <h3>Read the latest on MLB</h3>
-  {{#each articles}}
-  <div class="card bg-light mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <a href="{{link}}" class="card-link" target="_blank">View article on MLB.com</a>
-      <p class="card-text">{{intro}}...</p>
-      <a data-articleId="{{_id}}" class="btn btn-primary save-btn">Save article</a>
+{{> navs/index}}
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{this.title}}</h1>
+            <h3>{{this.summary}}</h3>
+        </div>
     </div>
-  </div>
-  {{/each}}
 </div>
+
+<div id="articles">
+    {{#each articles}}
+    <div class="well">
+        <div class="row">
+            <div class="col col-md-4">
+                <h4><a href="{{this.link}}">{{this.title}}</a></h4>
+                <p>{{this.summary}}</p>
+            </div>
+            <div class="col col-md-4">
+                <img src="{{this.image}}" height="200" width="300">
+            </div>
+            <div class="col col-md-2">
+                <form class="form-inline" action="/api/articles/save/{{this.id}}" method="POST">
+                    <button type="submit" class="btn btn-success">Save Article</button>
+                </form>
+            </div>
+            <div class="col col-md-2">
+                <form class="form-inline" action="/api/articles/dismiss/{{this.id}}" method="POST">
+                    <button type="submit" class="btn btn-warning">Remove Article</button>
+                </form>
+            </div>
+        </div>
+       
+    </div>
+     {{/each}}
+</div>
+
+
+<div id="notes"></div>

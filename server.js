@@ -1,47 +1,45 @@
-// Dependencies
-const bodyParser = require('body-parser');
-const logger = require('morgan');
-const express = require('express');
-const exphbs = require('express-handlebars');
+const express = require("express");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const exphbs = require("express-handlebars");
 
+const PORT = process.env.PORT || 3000;
+
+//initialize express
 const app = express();
 
-const PORT = process.env.PORT || 3500;
+//configure middleware
 
-// initalize morgan
-app.use(logger('dev'));
-app.use(
-    bodyParser.urlencoded({
-        extended:false
-    })
-);
-
-// connect to public dir
-app.use(express.static('public'));
+//use morgan logger for logging requests
+app.use(logger("dev"));
+//parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+//make public a static folder
+app.use(express.static("public"));
+app.engine('.hbs', exphbs({extname: '.hbs'}));
+app.set('view engine', '.hbs');
 
-// creating handlebars 
-app.engine(
-    'handlebars',
-    exphbs({
-        defaultLayout: 'main'
-    })
-);
-
-app.set(
-    'view-engine',
-    'handlebars'
-);
-
-const routes = require('./routes/routes');
-
+// define mongodb connection
+mongoose.connect(
+    // use uri from env when in production
+    process.env.NODE_ENV === "production"
+      ? process.env.MONGO_DB_PROD_URI
+      : "mongodb://localhost/mongoHeadlines",
+    {
+      // following lines are just to prevent deprecation warnings
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useCreateIndex: true
+    }
+  );
+//routes
+const routes = require("./routes/index");
 app.use(routes);
 
-app.engine('handlebars',exphbs({defaultLayout: 'main'}));
-app.set('view-engine','handlebars');
-
+// start the server
 app.listen(PORT, () => {
     console.log(
-        `==> 🌎  Access your app at http://localhost:` + PORT
-    )
+        `===> 🌎  Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`
+    );
 });
