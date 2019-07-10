@@ -18,6 +18,7 @@ app.use(
 
 // connect to public dir
 app.use(express.static('public'));
+app.use(express.json());
 
 // creating handlebars 
 app.engine(
@@ -31,6 +32,10 @@ app.set(
     'view-engine',
     'handlebars'
 );
+
+const routes = require('./routes/routes');
+
+app.use(routes);
 
 app.engine('handlebars',exphbs({defaultLayout: 'main'}));
 app.set('view-engine','handlebars');
