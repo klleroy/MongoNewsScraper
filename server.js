@@ -3,6 +3,13 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
 
+//scrping tools
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+//require all models
+const db = require("./models");
+
 const PORT = process.env.PORT || 3000;
 
 //initialize express
@@ -20,26 +27,22 @@ app.use(express.static("public"));
 app.engine('.hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
-// define mongodb connection
-mongoose.connect(
-    // use uri from env when in production
-    process.env.NODE_ENV === "production"
-      ? process.env.MONGO_DB_PROD_URI
-      : "mongodb://localhost/mongoHeadlines",
-    {
-      // following lines are just to prevent deprecation warnings
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    }
-  );
+//connect to the Mongo DB - if deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+mongoose.connect(MONGODB_URI, { 
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useCreateIndex: true
+ });
+
 //routes
 const routes = require("./routes/index");
 app.use(routes);
 
 // start the server
 app.listen(PORT, () => {
-    console.log(
-        `===> 🌎  Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`
-    );
+  console.log(
+      `===> 🌎 Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`
+  );
 });
