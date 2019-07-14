@@ -6,10 +6,10 @@ const Article = require("../../models/Article");
 const axios = require("axios");
 
 //get all articles from database
-router.get("/", (req, res) => {
+router.get("/", function (req, res) {
     Article
         .find({})
-        .exec((error, docs) => {
+        .exec(function (error, docs) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -20,13 +20,13 @@ router.get("/", (req, res) => {
 });
 
 //get all saved articles
-router.get("/saved", (req, res) => {
+router.get("/saved", function (req, res) {
     Article
         .find({})
         .where("saved").equals(true)
         .where("deleted").equals(false)
         .populate("notes")
-        .exec((error, docs) => {
+        .exec(function (error, docs) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -37,11 +37,11 @@ router.get("/saved", (req, res) => {
 });
 
 //get all deleted articles
-router.get("/deleted", (req, res) => {
+router.get("/deleted", function (req, res) {
     Article
         .find({})
         .where("deleted").equals(true)
-        .exec((error, docs) => {
+        .exec(function (error, docs) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -52,11 +52,11 @@ router.get("/deleted", (req, res) => {
 });
 
 //save an article
-router.post("/save/:id", (req, res) => {
+router.post("/save/:id", function (req, res) {
     Article.findByIdAndUpdate(req.params.id,
         { $set: { saved: true } },
         { new: true },
-        (error, doc) => {
+        function (error, doc) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -67,11 +67,11 @@ router.post("/save/:id", (req, res) => {
 });
 
 //delete a saved article
-router.post("/delete/:id", (req, res) => {
+router.post("/delete/:id", function (req, res) {
     Article.findByIdAndUpdate(req.params.id,
         { $set: { deleted: true } },
         { new: true },
-        (error, doc) => {
+        function (error, doc) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -83,11 +83,11 @@ router.post("/delete/:id", (req, res) => {
 });
 
 // dismiss a scraped article
-router.post('/dismiss/:id', (req, res) => {
+router.post('/dismiss/:id', function(req, res) {
     Article.findByIdAndUpdate(req.params.id,
         { $set: { deleted: true } },
         { new: true },
-        (error, doc) => {
+        function(error, doc) {
             if (error) {
                 console.log(error);
                 res.status(500);
@@ -98,16 +98,16 @@ router.post('/dismiss/:id', (req, res) => {
 });
 
 //scrape articles
-router.get("/scrape", (req, res) => {
+router.get("/scrape", function(req, res) {
     //grab body of the html with axios
-    axios.get("http://www.nytimes.com/section/sports").then((response) => {
+    axios.get("http://www.nytimes.com/section/sports").then(function(response) {
         //load that into cheerio and save it to $ for a shorthand selector
-        const $ = cheerio.load(response.data);
+        var $ = cheerio.load(response.data);
 
         //grab every article tag
-        $("article").each((i, element) => {
+        $("article").each(function(i, element) {
             //save an empty result object
-            const result = {};
+            var result = {};
 
             //add the title, summary, link and image and save them as properties of the result object
             result.title = $(this)
@@ -125,11 +125,11 @@ router.get("/scrape", (req, res) => {
 
             //create new Article using the result object built from scraping
             Article.create(result)
-                .then((dbArticle) => {
+                .then(function(dbArticle) {
                     //view the added result in the console
                     console.log(dbArticle);
                 })
-                .catch((err) => {
+                .catch(function(err) {
                     //if error occurred, log it
                     console.log(err);
                 });
