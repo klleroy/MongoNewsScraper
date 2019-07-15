@@ -8,7 +8,7 @@
 ## Usage
 Click on Scrape New Articles to have cheerio and axios scrape the NY Times Sports page to get the latest headlines imported into the website.
 
-![Screenshot](public/assets/images/screenshot.jpg)
+![Screenshot](public/assets/img/screenshot.jpg)
 
 ## Technologies and Techniques Used
 This project was created using the following:
