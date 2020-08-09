@@ -24,14 +24,14 @@ This project was created using the following:
 This Application runs on a Heroku Server utilizing Node, Express, MongoDB & Handlebars.
 
 ## Contributing
-* Fork it (https://github.com/jobu206/MongoNewsScraper/fork)
+* Fork it (https://github.com/klleroy/MongoNewsScraper/fork)
 * Create your feature branch `git checkout -b feature/MongoNewsScraper`
 * Commit your changes git commit -am 'Add your Message Here'
 * Push to the branch git push origin feature/MongoNewsScraper
 * Create a new Pull Request
 
 ## Support
-* Open a new issue [here](https://github.com/jobu206/MongoNewsScraper/issues/new) for support.
+* Open a new issue [here](https://github.com/klleroy/MongoNewsScraper/issues/new) for support.
 
 ## License
 
